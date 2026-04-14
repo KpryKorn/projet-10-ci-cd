@@ -83,13 +83,23 @@ jobs:
     needs: frontend-validation
 
     steps:
-      - name: checkout code
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-
       - name: SonarQube scan
         working-directory: ./front
-        uses: SonarSource/sonarqube-scan-action@v6
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          echo "🔍 Running SonarQube analysis..."
+          npm install -g sonarqube-scanner
+          sonar-scanner \
+            -Dsonar.projectKey=KpryKorn_projet-10-ci-cd \
+            -Dsonar.organization=kprykorn \
+            -Dsonar.sources=src \
+            -Dsonar.tests=src \
+            -Dsonar.test.inclusions=**/*.spec.ts \
+            -Dsonar.exclusions=**/node_modules/**,**/*.spec.ts,**/coverage/**,**/dist/** \
+            -Dsonar.typescript.lcov.reportPaths=coverage/bobapp/lcov.info \
+
+      - name: Summary
+        run: |
+          echo "✅ SonarQube frontend analysis completed!"
+          echo "📊 Results available on SonarCloud.io"
