@@ -89,6 +89,9 @@ jobs:
 
       - name: SonarQube scan
         uses: SonarSource/sonarqube-scan-action@v6
+        with:
+          args: >
+            -Dsonar.sources=front/
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
