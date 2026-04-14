@@ -83,6 +83,10 @@ jobs:
     needs: frontend-validation
 
     steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
       - name: SonarQube scan
         uses: SonarSource/sonarqube-scan-action@v6
         env:
