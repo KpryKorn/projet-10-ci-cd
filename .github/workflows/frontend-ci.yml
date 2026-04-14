@@ -84,9 +84,9 @@ jobs:
 
     steps:
       - name: SonarQube scan
+        uses: SonarSource/sonarqube-scan-action@v6
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        uses: SonarSource/sonarqube-scan-action@v6
 
       - name: Summary
         run: |
