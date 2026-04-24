@@ -1,11 +1,16 @@
 name: Frontend Docker Build & Push
 
-on: [push]
+on:
+  workflow_run:
+    workflows: ["Frontend CI"]
+    types:
+      - completed
 
 jobs:
   frontend-docker-deploy:
     name: Construction et publication image Docker
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
 
     steps:
       - name: Récupération du code
