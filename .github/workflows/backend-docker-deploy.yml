@@ -1,16 +1,18 @@
 name: Backend Docker Build & Push
 
 on:
-  workflow_run:
-    workflows: ["Backend CI"]
-    types:
-      - completed
+  push:
+    branches:
+      - main
+    paths:
+      - "back/**"
 
 jobs:
   backend-docker-deploy:
     name: Construction et publication image Docker
     runs-on: ubuntu-latest
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    environment:
+      name: production-backend
 
     steps:
       - name: Récupération du code
